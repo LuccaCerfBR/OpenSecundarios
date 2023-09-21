@@ -20,7 +20,7 @@ def fetch_tenors():
 
 # Função para buscar dados da query especificada com filtro por tenor
 def fetch_custom_data(tenor=None):
-    query = "SELECT * FROM XP_INVEST_RF_BANC_RELATIVE where dataref= '2023-09-03' and id ='25137'"
+    query = "SELECT * FROM XP_INVEST_RF_BANC_RELATIVE where dataref= '2023-09-03'"
     if tenor:
         query += f" AND tenor = '{tenor}'"
     with engine.connect() as conn:
