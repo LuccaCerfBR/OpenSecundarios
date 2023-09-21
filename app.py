@@ -4,13 +4,17 @@ import streamlit as st
 from sqlalchemy import create_engine, text
 
 # Configuração do banco de dados SQL Server
-conn_str = (
-    r'DRIVER={ODBC Driver 17 for SQL Server};'
-    r'SERVER=localhost\SQLEXPRESS;'
-    r'DATABASE=master;'  # Substitua 'YourDatabaseName' pelo nome do seu banco de dados
-    r'Trusted_Connection=yes;'  # Isso usa autenticação do Windows
-)
-engine = create_engine(f"mssql+pyodbc:///?odbc_connect={conn_str}")
+# conn_str = (
+#     r'DRIVER={ODBC Driver 17 for SQL Server};'
+#     r'SERVER=localhost\SQLEXPRESS;'
+#     r'DATABASE=master;'  # Substitua 'YourDatabaseName' pelo nome do seu banco de dados
+#     r'Trusted_Connection=yes;'  # Isso usa autenticação do Windows
+# )
+# engine = create_engine(f"mssql+pyodbc:///?odbc_connect={conn_str}")
+
+connection_string = "mssql+pyodbc://usrbancsec:perigo@localhost:8501/master?driver=ODBC+Driver+17+for+SQL+Server"
+engine = create_engine(connection_string)
+
 
 # Função para buscar todos os tenores disponíveis
 def fetch_tenors():
@@ -20,7 +24,7 @@ def fetch_tenors():
 
 # Função para buscar dados da query especificada com filtro por tenor
 def fetch_custom_data(tenor=None):
-    query = "SELECT * FROM XP_INVEST_RF_BANC_RELATIVE where dataref= '2023-09-03' and id ='25137'"
+    query = "SELECT * FROM XP_INVEST_RF_BANC_RELATIVE where dataref= '2023-09-04'"
     if tenor:
         query += f" AND tenor = '{tenor}'"
     with engine.connect() as conn:
