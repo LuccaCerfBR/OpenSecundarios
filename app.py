@@ -12,7 +12,7 @@ from sqlalchemy import create_engine, text
 # )
 # engine = create_engine(f"mssql+pyodbc:///?odbc_connect={conn_str}")
 
-connection_string = "mssql+pyodbc://usrbancsec:perigo@localhost:8501/master?driver=ODBC+Driver+17+for+SQL+Server"
+connection_string = "mssql+pyodbc://usrbancsec:perigo@192.168.68.66:8501/master?driver=ODBC+Driver+17+for+SQL+Server"
 engine = create_engine(connection_string)
 
 
