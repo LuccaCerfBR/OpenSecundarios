@@ -27,20 +27,34 @@ def count_investments():
 # Interface Streamlit
 st.title("Streamlit com MySQL")
 
-# Check for changes in number of rows
-current_count = count_investments()
-last_count = st.session_state.get("last_count", None)
+# Sidebar com opções de páginas
+option = st.sidebar.selectbox(
+    "Escolha uma página",
+    ["SecundariosRF", "Fluxo RF dia", "Risco Retorno RF", "Curva FTP"]
+)
 
-if last_count is None:
-    st.session_state["last_count"] = current_count
-elif last_count != current_count:
-    st.session_state["last_count"] = current_count
-    st.experimental_rerun()
+# Exibir conteúdo com base na opção selecionada
+if option == "SecundariosRF":
+    # Check for changes in number of rows
+    current_count = count_investments()
+    last_count = st.session_state.get("last_count", None)
 
-# Mostrar todos os dados da tb_investimentos
-st.write("Dados da tb_investimentos:")
-data = fetch_all_investments()
-if data:
-    st.table(data)
-else:
-    st.write("Nenhum dado encontrado na tabela tb_investimentos.")
+    if last_count is None:
+        st.session_state["last_count"] = current_count
+    elif last_count != current_count:
+        st.session_state["last_count"] = current_count
+        st.experimental_rerun()
+
+    # Mostrar todos os dados da tb_investimentos
+    st.write("Dados da tb_investimentos:")
+    data = fetch_all_investments()
+    if data:
+        st.table(data)
+    else:
+        st.write("Nenhum dado encontrado na tabela tb_investimentos.")
+elif option == "Fluxo RF dia":
+    st.write("Conteúdo da página 'Fluxo RF dia'")
+elif option == "Risco Retorno RF":
+    st.write("Conteúdo da página 'Risco Retorno RF'")
+elif option == "Curva FTP":
+    st.write("Conteúdo da página 'Curva FTP'")
