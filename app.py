@@ -18,8 +18,24 @@ def fetch_all_investments():
     with engine.connect() as conn:
         return conn.execute(text(query)).fetchall()
 
+# Função para contar o número de registros na tabela tb_investimentos
+def count_investments():
+    query = "SELECT COUNT(*) FROM tb_investimentos"
+    with engine.connect() as conn:
+        return conn.execute(text(query)).scalar()
+
 # Interface Streamlit
 st.title("Streamlit com MySQL")
+
+# Check for changes in number of rows
+current_count = count_investments()
+last_count = st.session_state.get("last_count", None)
+
+if last_count is None:
+    st.session_state["last_count"] = current_count
+elif last_count != current_count:
+    st.session_state["last_count"] = current_count
+    st.experimental_rerun()
 
 # Mostrar todos os dados da tb_investimentos
 st.write("Dados da tb_investimentos:")
